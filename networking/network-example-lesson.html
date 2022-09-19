@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Front End Development / React</title>
+  </head>
+  <body>
+    <!-- We will put our React component inside this div. -->
+    <div id="root"></div>
+
+    <!-- Load React & Babel -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <script type="text/babel">
+    
+      function NasaExample() {
+        // LIVESHARE PUT ON!
+        const [explanation, setExplanation] = React.useState('');
+        const [url, setUrl] = React.useState('');
+        const [mediaType, setMediaType] = React.useState('');
+        const [isReady, setReady] = React.useState(false);
+
+        React.useEffect( () => {
+          fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY')
+            .then(response => response.json()) 
+            .then(responseData =>  {
+              setExplanation(responseData.explanation);
+              setUrl(responseData.url);
+              setMediaType(responseData.media_type);
+              setReady(true);
+              console.log("FETCHING");
+            })
+            .catch(err => console.error(err))
+
+        }, []);
+
+        if(!isReady) {
+          return <p>Loading...</p>
+        }
+        else if(mediaType === "image") {
+          return (
+            <div>
+              <p>Explanation: {explanation}</p>
+              <img src={url} />
+            </div>
+          );
+        }
+        else {
+          <div>
+              <p>Explanation: {explanation}</p>
+              <iframe width="520" height="415"
+                src={url}>
+              </iframe>
+            </div>
+         
+        }
+
+        return (
+          <div>
+            <p>
+              {explanation}
+            </p>
+            <img src ={url} />
+          </div>
+        );
+      }
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<div><NasaExample /> </div>);
+
+
+
+    </script>
+  </body>
+</html>

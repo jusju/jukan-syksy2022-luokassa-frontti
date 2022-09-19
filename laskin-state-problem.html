@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Front End Development / React</title>
+  </head>
+  <body>
+    <!-- We will put our React component inside this div. -->
+    <div id="root"></div>
+
+    <!-- Load React & Babel -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- Load our React component. -->
+    <script type="text/babel">
+        const LaskinComponent = () => {
+            // TILAN ELI STATEN ESITTELY, NUMEROMUOTOINEN
+            const [laskuri, setLaskuri] = React.useState(0);
+
+            const kasvattaja = () => {
+                // STATE RENDER NOT IMMEDIATELY
+                // DO NOT CALCULATE BETWEEN
+                // RESULT IS ONE BECAUSE BATCHED UPDATES
+                // FUNCTION UPDATER FUNCTION 
+                // NAMING CONVENTION TELLING WHAT IS FUNCTION AND VARIABLE
+                setLaskuri(laskuri + 1); // 0+1
+                setLaskuri(laskuri + 1); // 0+1
+                setLaskuri(laskuri + 1); // 0+1
+            }
+
+            return ( <div>
+                <div>
+                Laskuri on {laskuri}
+                </div>
+                <button onClick={kasvattaja}>+</button>
+                </div>
+            );
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<div><LaskinComponent /> </div>);
+
+
+    </script>
+  </body>
+</html>

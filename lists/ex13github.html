@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Front End Development / React</title>
+  </head>
+  <body>
+    <!-- We will put our React component inside this div. -->
+    <div id="root"></div>
+    <!-- Load React & Babel -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+    <script type="text/babel">
+function GithubInput() {
+  const [listanRivit, setListanRivit] = React.useState([]);
+  const [haku, setHaku] = React.useState("");
+
+  const haeRepot = () => {
+    console.log("NAPPAINTA PAINETTU");
+    fetch(`https://api.github.com/search/repositories?q=react`)
+      .then(vastaus => vastaus.json())  
+      .then(vastausData => {    
+        setListanRivit(vastausData.items)    
+    })
+    console.log("HAKEE");
+    console.log(haku);
+  }
+
+
+const inputChanged = (event) => {
+  setHaku(event.target.value);
+}
+return(
+  <div>
+    <h2>Repositories</h2>
+ 
+  <button onClick={haeRepot}>Search</button>
+    <table>
+      <tbody>
+        <tr><th>Name</th><th>URL</th></tr>
+        { listanRivit.map((item) =>
+          <tr key={item.id}>
+            <td>{item.full_name}</td>
+            <td><a href={item.html_url}>{item.owner.html_url}</a></td>
+            </tr> )}
+      </tbody>
+    </table>
+  </div>
+);
+}
+ReactDOM.render(<GithubInput />, document.getElementById('root'));
+    </script>
+  </body>
+</html>

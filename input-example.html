@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Front End Development / React</title>
+  </head>
+  <body>
+    <!-- We will put our React component inside this div. -->
+    <div id="root"></div>
+
+    <!-- Load React & Babel -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- Load our React component. -->
+    <script type="text/babel">
+        const HelloName = () => {
+            // TILAN ELI STATEN ESITTELY, NUMEROMUOTOINEN
+            // REACT NEEDS TO KNOW IF YOU UPDATE STATE
+            // IDEA OMA NAMING CONVENTION
+            const [name, setName] = React.useState({firstName: '', lastName: ''});
+            const [firstName, setFirstName] = React.useState('');
+            const [lastName, setLastName] = React.useState('');
+
+
+            // JUKAN NAMING CONVENTION - FUNCTIONS
+            // GO TO LUNCH
+            const inputChanged = (event) => {
+              console.log("INPUT COMING IN");
+              setName({...name, [event.target.name]: event.target.value});
+            }
+
+            return ( <div>
+              {name.firstName}
+              {name.lastName} 
+
+                  <input   name="firstName"  value={name.firstName}   onChange={inputChanged} />
+                  <input   name="lastName"  value={name.lastName}   onChange={inputChanged} />
+ 
+                <button onClick={inputChanged}>+</button>
+                </div>
+            );
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<div><HelloName /> </div>);
+
+
+    </script>
+  </body>
+</html>

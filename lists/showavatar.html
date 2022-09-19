@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>React getting started</title>
+  </head>
+  <body>
+    <!-- Root container for react components -->
+    <div id='root'></div>
+
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+
+    <script type="text/babel">
+      function AvatarLista() {
+
+          const [users, setUsers] = React.useState([]);
+          const [user, setUser] = React.useState('');
+
+        React.useEffect(() => {
+          fetch('https://reqres.in/api/users')
+          .then(response => response.json())
+          .then(responseData => {
+              setUsers(responseData.data)
+          })
+          console.log("HAKEE");
+        }, [])
+      return(
+            <div>
+              <h1>Users</h1>
+              <table>
+                <tbody>
+                  <th>
+                    <td>First name</td>
+                  </th>
+                  {
+                  users.map(user =>
+                    <tr key={user.id}>
+                      <td>{user.first_name}</td>
+                      <td>{user.last_name}</td>
+                      <td>{user.email}</td>
+                      <td><img src={user.avatar}/></td>
+                    </tr>
+                  )
+                  }
+                </tbody>
+              </table>
+
+            </div>
+          );
+
+          }
+
+        ReactDOM.render(<AvatarLista />, document.getElementById('root'));
+
+    </script>
+  </body>
+</html>
